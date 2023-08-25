@@ -43,10 +43,13 @@ def run():
         links = re.findall(r'title>\s*<link>([^<>]*?)</link>',response.text)
         logger.info(links)
         for proxy in proxys:
-            links = random.sample(links, len(links)-5)
-            for link in links:
+            links1 = random.sample(links, len(links)-5)
+            for link in links1:
                 print(proxy,link)
-                go_link(proxy,link)
+                try:
+                    go_link(proxy,link)
+                except Exception as e:
+                    logger.error(f"请求报错：{e}")
 
 def go_link(proxy,url='https://blog.csdn.net/qq_37462361/article/details/132275183'):
     time.sleep(random.random()*10)
