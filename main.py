@@ -37,9 +37,7 @@ def run():
         'sec-ch-ua-platform': '"Windows"',
     }
     response = requests.get(csdnRRS, headers=headers)
-
     print(response)
-    print(response.text)
     if response.status_code==200 and r'xml' in response.text:
         logger.info("正常")
         links = re.findall(r'title>\s*<link>([^<>]*?)</link>',response.text)
@@ -72,7 +70,10 @@ def go_link(proxy,url='https://blog.csdn.net/qq_37462361/article/details/1322751
         "http": f'http://{proxy}',
         "https": f'http://{proxy}'
     }
-    response = requests.get(url, headers=headers,proxies=proxies)
+    if proxy:
+        response = requests.get(url, headers=headers,proxies=proxies)
+    else:
+        response = requests.get(url, headers=headers)
     print(response)
     time.sleep(random.random() * 5)
 
